@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Repositories\Product\ProductRepositoriesInterFace;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('front/index');
-    // return App\Models\Product::find(1)->productImages;
+Route::get('/', function (ProductRepositoriesInterFace $productRepositories) {
+    // return view('front/index');
+    return $productRepositories->find(1);
 });
