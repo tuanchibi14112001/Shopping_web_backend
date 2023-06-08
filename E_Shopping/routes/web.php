@@ -1,6 +1,7 @@
 <?php
 
 use App\Repositories\Product\ProductRepositoriesInterFace;
+use App\Service\Product\ProductServiceInterface;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (ProductRepositoriesInterFace $productRepositories) {
+Route::get('/', function (ProductServiceInterface $productRepositories) {
     // return view('front/index');
     return $productRepositories->find(1);
 });
