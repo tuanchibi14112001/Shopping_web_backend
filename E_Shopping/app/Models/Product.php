@@ -20,7 +20,7 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
     }
     public function productComments(){
-        return $this->hasMany(ProductComments::class, 'product_id', 'id');
+        return $this->hasMany(ProductComment::class, 'product_id', 'id');
     }
     public function productDetails(){
         return $this->hasMany(ProductDetail::class, 'product_id', 'id');
