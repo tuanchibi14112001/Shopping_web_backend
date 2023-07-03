@@ -20,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('shop/product/{id}', [ShopController::class, 'show']);
+
+Route::post('shop/product/{id}', [ShopController::class, 'postComment']);
