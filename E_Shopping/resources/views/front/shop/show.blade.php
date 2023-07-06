@@ -337,7 +337,8 @@
                                         @foreach ($product->productComments as $productComment)
                                             <div class="co-item">
                                                 <div class="avatar-pic">
-                                                    <img src="front/img/user/{{$productComment->user->avatar ?? 'default-avatar.jpg'}}" alt="">
+                                                    <img src="front/img/user/{{ $productComment->user->avatar ?? 'default-avatar.jpg' }}"
+                                                        alt="">
                                                 </div>
                                                 <div class="avatar-text">
                                                     <div class="pd-rating">
@@ -354,20 +355,23 @@
                                                         @endfor
                                                         <span>({{ $productComment->rating }})</span>
                                                     </div>
-                                                    <h5>{{$productComment->name}} <span>{{date('M d Y', strtotime($productComment->created_at)) }}</span></h5>
-                                                    <div class="at-reply">{{$productComment->messages}}</div>
+                                                    <h5>{{ $productComment->name }}
+                                                        <span>{{ date('M d Y', strtotime($productComment->created_at)) }}</span>
+                                                    </h5>
+                                                    <div class="at-reply">{{ $productComment->messages }}</div>
                                                 </div>
                                             </div>
                                         @endforeach
 
                                     </div>
-                                    
+
                                     <div class="leave-comment">
                                         <h4>Leave A Comment</h4>
                                         <form action="" method="post" class="comment-form">
                                             @csrf
-                                            <input type="hidden" name="product_id" value="{{$product->id}}">
-                                            <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::user()->id ?? null}}">
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="user_id"
+                                                value="{{ \Illuminate\Support\Facades\Auth::user()->id ?? null }}">
 
                                             <div class="row">
                                                 <div class="col-lg-6">
@@ -383,15 +387,20 @@
                                                     <div class="personal-rating">
                                                         <h6>Your Rating</h6>
                                                         <div class="rate">
-                                                            <input type="radio" id="star5" name="rating" value="5" />
+                                                            <input type="radio" id="star5" name="rating"
+                                                                value="5" />
                                                             <label for="star5" title="text">5 stars</label>
-                                                            <input type="radio" id="star4" name="rating" value="4" />
+                                                            <input type="radio" id="star4" name="rating"
+                                                                value="4" />
                                                             <label for="star4" title="text">4 stars</label>
-                                                            <input type="radio" id="star3" name="rating" value="3" />
+                                                            <input type="radio" id="star3" name="rating"
+                                                                value="3" />
                                                             <label for="star3" title="text">3 stars</label>
-                                                            <input type="radio" id="star2" name="rating" value="2" />
+                                                            <input type="radio" id="star2" name="rating"
+                                                                value="2" />
                                                             <label for="star2" title="text">2 stars</label>
-                                                            <input type="radio" id="star1" name="rating" value="1" />
+                                                            <input type="radio" id="star1" name="rating"
+                                                                value="1" />
                                                             <label for="star1" title="text">1 star</label>
                                                         </div>
                                                     </div>
@@ -420,212 +429,43 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="front/img/products/women-1.jpg" alt="">
-                            <div class="sale pp-sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
+                @foreach ($related_products as $product)
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="front/img/products/{{ $product->productImages[0]->path }}" alt="">
+                                @if ($product->discount != null && $product->discount > 0)
+                                    <div class="sale">Sale</div>
+                                @endif
+                                <div class="icon">
+                                    <i class="icon_heart_alt"></i>
+                                </div>
+                                <ul>
+                                    <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
+                                    <li class="quick-view"><a href="shop/product/{{$product->id}}">+ Quick View</a></li>
+                                    <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                </ul>
                             </div>
-                            <ul>
-                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Coat</div>
-                            <a href="">
-                                <h5>Pure Pineapple</h5>
-                            </a>
-                            <div class="product-price">
-                                $14.88
-                                <span>$35.88</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="front/img/products/women-1.jpg" alt="">
-                            <div class="sale pp-sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Coat</div>
-                            <a href="">
-                                <h5>Pure Pineapple</h5>
-                            </a>
-                            <div class="product-price">
-                                $14.88
-                                <span>$35.88</span>
+                            <div class="pi-text">
+                                <div class="catagory-name">{{$product->productCategory->name}}</div>
+                                <a href="">
+                                    <h5>{{ $product->name}}</h5>
+                                </a>
+                                <div class="product-price">
+                                    
+                                    @if ($product->discount != null && $product->discount > 0)
+                                        ${{ $product->discount }} <span> ${{ $product->price }}</span>
+                                    @else
+                                        ${{ $product->price }}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="front/img/products/women-1.jpg" alt="">
-                            <div class="sale pp-sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Coat</div>
-                            <a href="">
-                                <h5>Pure Pineapple</h5>
-                            </a>
-                            <div class="product-price">
-                                $14.88
-                                <span>$35.88</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="front/img/products/women-1.jpg" alt="">
-                            <div class="sale pp-sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Coat</div>
-                            <a href="">
-                                <h5>Pure Pineapple</h5>
-                            </a>
-                            <div class="product-price">
-                                $14.88
-                                <span>$35.88</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
-            <!-- <div class="row">
-                                                                                                                                                                                <div class="product-slider owl-carousel">
-                                                                                                                                                                                    <div class="product-item">
-                                                                                                                                                                                        <div class="pi-pic">
-                                                                                                                                                                                            <img src="front/img/products/man-1.jpg" alt="">
-                                                                                                                                                                                            <div class="sale">Sale</div>
-                                                                                                                                                                                            <div class="icon">
-                                                                                                                                                                                                <i class="icon_heart_alt"></i>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                            <ul>
-                                                                                                                                                                                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                                                                                                                                                                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                                                                                                                                                                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                                                                                                                                                                                            </ul>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="pi-text">
-                                                                                                                                                                                            <div class="catagory-name">Coat</div>
-                                                                                                                                                                                            <a href="">
-                                                                                                                                                                                                <h5>Pure Pineapple</h5>
-                                                                                                                                                                                            </a>
-                                                                                                                                                                                            <div class="product-price">
-                                                                                                                                                                                                $14.88
-                                                                                                                                                                                                <span>$35.88</span>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="product-item">
-                                                                                                                                                                                        <div class="pi-pic">
-                                                                                                                                                                                            <img src="front/img/products/man-2.jpg" alt="">
-                                                                                                                                                                                            <div class="sale">Sale</div>
-                                                                                                                                                                                            <div class="icon">
-                                                                                                                                                                                                <i class="icon_heart_alt"></i>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                            <ul>
-                                                                                                                                                                                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                                                                                                                                                                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                                                                                                                                                                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                                                                                                                                                                                            </ul>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="pi-text">
-                                                                                                                                                                                            <div class="catagory-name">Coat</div>
-                                                                                                                                                                                            <a href="">
-                                                                                                                                                                                                <h5>Pure Pineapple</h5>
-                                                                                                                                                                                            </a>
-                                                                                                                                                                                            <div class="product-price">
-                                                                                                                                                                                                $14.88
-                                                                                                                                                                                                <span>35.88</span>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="product-item">
-                                                                                                                                                                                        <div class="pi-pic">
-                                                                                                                                                                                            <img src="front/img/products/man-2.jpg" alt="">
-                                                                                                                                                                                            <div class="sale">Sale</div>
-                                                                                                                                                                                            <div class="icon">
-                                                                                                                                                                                                <i class="icon_heart_alt"></i>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                            <ul>
-                                                                                                                                                                                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                                                                                                                                                                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                                                                                                                                                                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                                                                                                                                                                                            </ul>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="pi-text">
-                                                                                                                                                                                            <div class="catagory-name">Coat</div>
-                                                                                                                                                                                            <a href="">
-                                                                                                                                                                                                <h5>Pure Pineapple</h5>
-                                                                                                                                                                                            </a>
-                                                                                                                                                                                            <div class="product-price">
-                                                                                                                                                                                                $14.88
-                                                                                                                                                                                                <span>35.88</span>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="product-item">
-                                                                                                                                                                                        <div class="pi-pic">
-                                                                                                                                                                                            <img src="front/img/products/man-2.jpg" alt="">
-                                                                                                                                                                                            <div class="sale">Sale</div>
-                                                                                                                                                                                            <div class="icon">
-                                                                                                                                                                                                <i class="icon_heart_alt"></i>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                            <ul>
-                                                                                                                                                                                                <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                                                                                                                                                                                <li class="quick-view"><a href="product.html">+ Quick View</a></li>
-                                                                                                                                                                                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
-                                                                                                                                                                                            </ul>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="pi-text">
-                                                                                                                                                                                            <div class="catagory-name">Coat</div>
-                                                                                                                                                                                            <a href="">
-                                                                                                                                                                                                <h5>Pure Pineapple</h5>
-                                                                                                                                                                                            </a>
-                                                                                                                                                                                            <div class="product-price">
-                                                                                                                                                                                                $14.88
-                                                                                                                                                                                                <span>35.88</span>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                </div>
-                                                                                                                                                                            </div> -->
-        </div>
+        </div> -->
+    </div>
     </div>
 
     <!-- Related Products Section End -->

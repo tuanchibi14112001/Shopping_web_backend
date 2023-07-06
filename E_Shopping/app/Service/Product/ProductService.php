@@ -30,4 +30,16 @@ class ProductService extends BaseService implements ProductServiceInterface
         $product->avgRating = $avgRating;
         return $product;
     }
+
+    public function getRelatedProducts($product, $limit){
+        return $this->repository->getRelatedProducts($product, $limit);
+    }
+
+    public function getFeaturedProducts(){
+        return [
+            'men'=> $this->repository->getFeaturedProducts(1),
+            'womman'=> $this->repository->getFeaturedProducts(2), 
+
+        ];
+    }
 }

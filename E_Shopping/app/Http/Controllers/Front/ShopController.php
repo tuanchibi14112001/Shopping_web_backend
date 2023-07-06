@@ -21,7 +21,11 @@ class ShopController extends Controller
     public function show($id)
     {
         $product = $this->productService->find($id);
-        return view('front.shop.show', ['product' => $product]);
+        $related_products = $this->productService->getRelatedProducts($product, 4);
+        return view('front.shop.show', [
+            'product' => $product,
+            'related_products' => $related_products,
+        ]);
     }
 
     public function postComment(Request $request)
