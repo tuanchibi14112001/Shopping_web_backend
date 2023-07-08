@@ -1160,6 +1160,12 @@ ol {
 	border-radius: 50px;
 }
 
+.product-slider .product-item .pi-pic {
+	overflow: hidden;
+	position: relative;
+	height: 316.5px;
+}
+
 .product-item {
 	margin-bottom: 26px;
 }
