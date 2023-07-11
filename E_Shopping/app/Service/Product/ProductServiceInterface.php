@@ -7,7 +7,8 @@ interface ProductServiceInterface extends ServiceInterface
 
 {
     public function getRelatedProducts($product, $limit);
-    public function getFeaturedProducts();   
+    public function getFeaturedProducts(); 
+    public function getProductOnIndex();  
 }
 
 

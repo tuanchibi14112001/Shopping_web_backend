@@ -23,5 +23,12 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
                     ->orderBy('price', 'desc')->get();
     }
 
+    public function getProductOnIndex(){
+        $products = $this->model->paginate(3);
+
+        return $products;
+
+    }
+
 }
 ?>

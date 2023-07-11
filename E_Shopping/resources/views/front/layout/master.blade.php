@@ -2,7 +2,7 @@
 <html lang="zxx">
 
 <head>
-    <base href="{{asset('/')}}">
+    <base href="{{ asset('/') }}">
     <meta charset="UTF-8">
     <meta name="description" content="codelean Template">
     <meta name="keywords" content="codelean, unica, creative, html">
@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="front/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="front/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="front/css/themify-icons.css" type="text/css">
@@ -181,8 +182,8 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop</a></li>
+                        <li class="{{ request()->segment(1) == '' ? 'active' : '' }}"><a href="./">Home</a></li>
+                        <li class="{{ request()->segment(1) == 'shop' ? 'active' : '' }}"><a href="./shop">Shop</a></li>
                         <li><a href="">Collection</a>
                             <ul class="dropdown">
                                 <li><a href="">Men's</a></li>
@@ -329,6 +330,7 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
+    
     <script src="front/js/jquery-3.3.1.min.js"></script>
     <script src="front/js/bootstrap.min.js"></script>
     <script src="front/js/jquery-ui.min.js"></script>
