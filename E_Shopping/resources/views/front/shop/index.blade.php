@@ -28,9 +28,9 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Catagories</h4>
                         <ul class="filter-catagories">
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Women</a></li>
-                            <li><a href="#">Kid</a></li>
+                            @foreach ($categories as $category)
+                                <li><a href="/shop/category/{{$category->name}}">{{$category->name}}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="filter-widget">
@@ -132,14 +132,31 @@
                     <div class="product-show-option">
                         <div class="row">
                             <div class="col-lg-7 col-md-7">
-                                <div class="select-option">
-                                    <select name="" id="" class="sorting">
-                                        <option value="">Default Sort</option>
-                                    </select>
-                                    <select name="" id="" class="p-show">
-                                        <option value="">Show:</option>
-                                    </select>
-                                </div>
+                                <form action="">
+                                    <div class="select-option">
+                                        <select name="sort_by" onchange="this.form.submit();" id=""
+                                            class="sorting">
+                                            <option {{ request('sort_by') == 'lastest' ? 'selected' : '' }} value="latest">
+                                                Sorting: Latest</option>
+                                            <option {{ request('sort_by') == 'oldest' ? 'selected' : '' }} value="oldest">
+                                                Sorting: Oldest</option>
+                                            <option {{ request('sort_by') == 'name-ascending' ? 'selected' : '' }}
+                                                value="name-ascending">
+                                                Sorting: Name A-Z</option>
+                                            {{-- <option {{ request('sort_by') == 'price-ascending' ? 'selected' : '' }} value="price-ascending">
+                                                Sorting: Price Ascending</option>
+                                            <option {{ request('sort_by') == 'price-descrease' ? 'selected' : '' }} value="price-descrease">
+                                                Sorting: Price Decrease</option> --}}
+                                        </select>
+                                        <select name="show" onchange="this.form.submit();" id=""
+                                            class="p-show">
+                                            <option {{ request('show') == '3' ? 'selected' : '' }} value="3">Show: 3
+                                            </option>
+                                            <option {{ request('show') == '9' ? 'selected' : '' }} value="9">Show: 9
+                                            </option>
+                                        </select>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-lg-5 col-md-5 text-right">
                             </div>
@@ -187,7 +204,7 @@
                             @endforeach
                         </div>
                     </div>
-                    {{ $products->links()}}
+                    {{ $products->links() }}
                 </div>
 
             </div>
