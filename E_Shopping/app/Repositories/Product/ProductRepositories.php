@@ -31,9 +31,8 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
     {
 
         $search_pro_name = $request->search_pro_name ?? '';
-
         $products = $this->model->where('name', 'like', '%' . $search_pro_name . '%');
-
+        $products = $this->filter($products, $request);
         $products = $this->sortAndPagination($products, $request);
 
         return $products;
@@ -42,8 +41,8 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
     public function getProductByCategory($category_name, $request)
     {
         $products = ProductCategory::where('name', $category_name)->first()->products->toQuery();
+        $products = $this->filter($products, $request);
         $products = $this->sortAndPagination($products, $request);
-
         return $products;
     }
 
@@ -81,6 +80,17 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
                 'show' => $per_page,
             ]
         );
+
+        return $products;
+    }
+
+    private function filter($products, $request)
+    {
+        // Brand
+        $brands = $request->brand ?? [];
+        $brand_ids = array_keys($brands);
+
+        $products = $brand_ids != null ? $products->whereIn('brand_id', $brand_ids) : $products;
 
         return $products;
     }
