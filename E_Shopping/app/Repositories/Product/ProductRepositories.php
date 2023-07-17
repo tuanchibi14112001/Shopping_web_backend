@@ -32,7 +32,7 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
 
         $search_pro_name = $request->search_pro_name ?? '';
         $products = $this->model->where('name', 'like', '%' . $search_pro_name . '%');
-        $products = $this->filter($products, $request);
+        //$products = $this->filter($products, $request);
         $products = $this->sortAndPagination($products, $request);
 
         return $products;
@@ -41,7 +41,7 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
     public function getProductByCategory($category_name, $request)
     {
         $products = ProductCategory::where('name', $category_name)->first()->products->toQuery();
-        $products = $this->filter($products, $request);
+        //$products = $this->filter($products, $request);
         $products = $this->sortAndPagination($products, $request);
         return $products;
     }
@@ -51,6 +51,21 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
 
         $per_page = $request->show ?? 3;
         $sort_by  = $request->sort_by ?? 'latest';
+        $price_min  = $request->price_min ?? 10;
+        $price_max  = $request->price_max ?? 999;
+        $price_min  = str_replace('$', '', $price_min);
+        $price_max  = str_replace('$', '', $price_max);
+
+        $brands = $request->brand ?? [];
+        $color  = $request->color ?? '';
+        $size  = $request->size ?? '';
+        $products = $this->filter($products, $request);
+
+        $brands ??  $products->appends(
+            [
+                'brand' => $brands
+            ]);
+
         switch ($sort_by) {
             case 'latest':
                 $products = $products->orderByDesc('id');
@@ -76,6 +91,10 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
         $products = $products->paginate($per_page);
         $products->appends(
             [
+                'price_min'=>$price_min,
+                'price_max'=>$price_max,
+                'color' => $color,
+                'size' => $size,
                 'sort_by' => $sort_by,
                 'show' => $per_page,
             ]
@@ -91,6 +110,27 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
         $brand_ids = array_keys($brands);
 
         $products = $brand_ids != null ? $products->whereIn('brand_id', $brand_ids) : $products;
+
+        // price
+
+        $price_min  = $request->price_min;
+        $price_max  = $request->price_max;
+        $price_min  = str_replace('$', '', $price_min);
+        $price_max  = str_replace('$', '', $price_max);
+
+        $products = ($price_min && $price_max) ? $products->whereBetween('price', [$price_min, $price_max]) : $products;
+
+        //color
+        $color  = $request->color;
+        $products = $color != null ? $products->whereHas('productDetails', function($query) use ($color) {
+            return $query->where('color', 'like', '%' . $color . '%')->where('qty','>',0);
+        }) : $products;
+
+        //size
+        $size  = $request->size;
+        $products = $size != null ? $products->whereHas('productDetails', function($query) use ($size) {
+            return $query->where('size', $size)->where('qty','>',0);
+        }) : $products;
 
         return $products;
     }

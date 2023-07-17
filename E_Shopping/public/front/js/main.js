@@ -186,12 +186,16 @@
         minamount = $("#minamount"),
         maxamount = $("#maxamount"),
         minPrice = rangeSlider.data('min'),
-        maxPrice = rangeSlider.data('max');
+        maxPrice = rangeSlider.data('max'),
+        minValue = rangeSlider.data('min-value') !== '' ? rangeSlider.data('min-value') : minPrice,
+        maxValue = rangeSlider.data('max-value') !== '' ? rangeSlider.data('max-value') : maxPrice;
+
+
     rangeSlider.slider({
         range: true,
         min: minPrice,
         max: maxPrice,
-        values: [minPrice, maxPrice],
+        values: [minValue, maxValue],
         slide: function (event, ui) {
             minamount.val('$' + ui.values[0]);
             maxamount.val('$' + ui.values[1]);
@@ -259,7 +263,7 @@
    --------------------- */
     const product_men = $(".product-slider.men");
     const product_women = $(".product-slider.women");
-    
+
 
 
     $('.filter-control').on('click', '.item', function () {
@@ -270,12 +274,12 @@
 
         $item.siblings().removeClass('active');
         $item.addClass('active');
-        
 
-        if(category === 'men'){
+
+        if (category === 'men') {
             product_men.owlcarousel2_filter(filter);
         }
-        if(category === 'women'){
+        if (category === 'women') {
             product_women.owlcarousel2_filter(filter);
         }
     });

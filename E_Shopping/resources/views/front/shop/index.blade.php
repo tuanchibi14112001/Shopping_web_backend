@@ -25,111 +25,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
-                    <form action="shop">
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Catagories</h4>
-                            <ul class="filter-catagories">
-                                @foreach ($categories as $category)
-                                    <li><a href="/shop/category/{{ $category->name }}">{{ $category->name }}</a></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Brand</h4>
-                            <div class="fw-brand-check">
-                                @foreach ($brands as $brand)
-                                    <div class="bc-item">
-                                        <label for="bc-{{ $brand->id }}">
-                                            {{ $brand->name }}
-                                            <input type="checkbox"
-                                                {{ (request('brand')[$brand->id] ?? '') == 'on' ? 'checked' : '' }}
-                                                name="brand[{{ $brand->id }}]" id="bc-{{ $brand->id }}"
-                                                onchange="this.form.submit();">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Price</h4>
-                            <div class="filter-range-wrap">
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
-                                    </div>
-                                </div>
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="33" data-max="98">
-                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-
-                                </div>
-                            </div>
-                            <a href="#" class="filter-btn">FILTER</a>
-                        </div>
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Color</h4>
-                            <div class="fw-color-choose">
-                                <div class="cs-item">
-                                    <input type="radio" name="" id="cs-black">
-                                    <label class="cs-black" for="cs-black">Black</label>
-                                </div>
-                                <div class="cs-item">
-                                    <input type="radio" name="" id="cs-blue">
-                                    <label class="cs-blue" for="cs-blue">Blue</label>
-                                </div>
-                                <div class="cs-item">
-                                    <input type="radio" name="" id="cs-red">
-                                    <label class="cs-red" for="cs-red">Red</label>
-                                </div>
-                                <div class="cs-item">
-                                    <input type="radio" name="" id="cs-violet">
-                                    <label class="cs-violet" for="cs-violet">Violet</label>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Size</h4>
-                            <div class="fw-size-choose">
-                                <div class="sc-item">
-                                    <input type="radio" name="" id="s-size">
-                                    <label for="s-size">S</label>
-                                    <input type="radio" name="" id="m-size">
-                                    <label for="m-size">M</label>
-                                    <input type="radio" name="" id="l-size">
-                                    <label for="l-size">L</label>
-                                    <input type="radio" name="" id="xl-size">
-                                    <label for="xl-size">XL</label>
-                                    <input type="radio" name="" id="xxl-size">
-                                    <label for="xxl-size">XXL</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Tags</h4>
-                            <div class="fw-tags">
-                                <a href="#">Towel</a>
-                                <a href="#">Shoes</a>
-                                <a href="#">Coat</a>
-                                <a href="#">Dresses</a>
-                                <a href="#">Man's Hats</a>
-                            </div>
-                        </div>
-                    </form>
+                    @include('front.shop.components.product-sidebar-filter')
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div class="product-show-option">
                         <div class="row">
                             <div class="col-lg-7 col-md-7">
                                 <form action="">
+                                    @if (request('brand'))
+                                        @foreach ( request('brand') as $key=>$brand)
+                                            <input type="hidden" name="brand[{{ $key }}]" value="on">
+                                        @endforeach
+                                    @endif
+                                    @if (request('price_min'))
+                                            <input type="hidden" name="price_min" value="{{request('price_min') }}">
+                                    @endif
+                                    @if (request('price_max'))
+                                            <input type="hidden" name="price_max" value="{{request('price_max')}}">
+                                    @endif
+                                    @if (request('color'))
+                                            <input type="hidden" name="color" value="{{request('color')}}">
+                                    @endif
+                                    @if (request('size'))
+                                            <input type="hidden" name="size" value="{{request('size')}}">
+                                    @endif
                                     <div class="select-option">
                                         <select name="sort_by" onchange="this.form.submit();" id=""
                                             class="sorting">
-                                            <option {{ request('sort_by') == 'lastest' ? 'selected' : '' }} value="latest">
+                                            <option {{ request('sort_by') == 'lastest' ? 'selected' : '' }}
+                                                value="latest">
                                                 Sorting: Latest</option>
                                             <option {{ request('sort_by') == 'oldest' ? 'selected' : '' }} value="oldest">
                                                 Sorting: Oldest</option>

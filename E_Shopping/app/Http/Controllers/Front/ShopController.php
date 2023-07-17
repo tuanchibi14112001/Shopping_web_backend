@@ -42,11 +42,15 @@ class ShopController extends Controller
 
     public function show($id)
     {
+        $categories = $this->productCategoryService->all();
+        $brands    = $this->brandService->all();
         $product = $this->productService->find($id);
         $related_products = $this->productService->getRelatedProducts($product, 4);
         return view('front.shop.show', [
             'product' => $product,
             'related_products' => $related_products,
+            'categories' => $categories,
+            'brands' => $brands
         ]);
     }
 

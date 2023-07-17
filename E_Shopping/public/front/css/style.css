@@ -1182,10 +1182,12 @@ ol {
 .product-item .pi-pic {
 	overflow: hidden;
 	position: relative;
+	height: 316.5px;
 }
 
 .product-item .pi-pic img {
 	min-width: 100%;
+	height: 100%;
 }
 
 .product-item .pi-pic .sale {
@@ -2250,11 +2252,15 @@ ol {
 }
 
 .product-details .pd-color .pd-color-choose .cc-item label.cc-blue {
-	background: rgb(24, 24, 155);
+	background: #2773BE;
 }
 
 .product-details .pd-color .pd-color-choose .cc-item label.cc-violet {
 	background: #8230E3;
+}
+
+.product-details .pd-color .pd-color-choose .cc-item label.cc-red {
+	background: #DC3232;
 }
 
 .product-details .pd-size-choose {
