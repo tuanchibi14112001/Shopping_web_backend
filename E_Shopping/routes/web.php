@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ShopController;
+use App\Http\Controllers\Front\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +27,9 @@ Route::prefix('shop')->group(function () {
 
     Route::get('category/{category_name}', [ShopController::class, 'category']);
 
+});
+
+Route::prefix('cart')->group(function () {
+    Route::get('', [CartController::class, 'index']);
+    Route::get('add/{id}', [CartController::class, 'add']);
 });

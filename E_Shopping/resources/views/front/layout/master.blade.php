@@ -54,8 +54,7 @@
                     <div class="lan-selector">
                         <select name="countries" id="countries" class="language_drop" style="width:388px;">
                             <option value="yt" data-image="front/img/flag-1.jpg" data-imagecss="flag yt"
-                                data-type="English">
-                                English</option>
+                                data-type="English">English</option>
                         </select>
                     </div>
 

@@ -61,10 +61,6 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
         $size  = $request->size ?? '';
         $products = $this->filter($products, $request);
 
-        $brands ??  $products->appends(
-            [
-                'brand' => $brands
-            ]);
 
         switch ($sort_by) {
             case 'latest':
@@ -91,6 +87,7 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
         $products = $products->paginate($per_page);
         $products->appends(
             [
+                'brand' => $brands,
                 'price_min'=>$price_min,
                 'price_max'=>$price_max,
                 'color' => $color,
