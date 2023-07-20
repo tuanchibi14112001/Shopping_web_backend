@@ -36,7 +36,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($carts as $cart)
-                                    <tr>
+                                    <tr data-rowId="{{$cart->rowId}}">
                                         <td class="cart-pic first-row"><img style="height: 170px;width: 170px;"
                                                 src="front/img/products/{{ $cart->options->images[0]->path }}"
                                                 alt="">
@@ -59,7 +59,9 @@
                                         </td>
                                         <td class="total-price first-row">${{ number_format($cart->price * $cart->qty, 2) }}
                                         </td>
-                                        <td class="close-td"><i class="ti-close"></i></td>
+                                        <td class="close-td">
+                                            <i class="ti-close" onclick="removeCart('{{$cart->rowId}}')"></i>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

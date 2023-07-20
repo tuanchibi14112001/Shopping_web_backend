@@ -285,3 +285,87 @@
     });
 
 })(jQuery);
+
+
+function addCart(product_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'cart/add',
+        data: { product_id: product_id },
+        success: function (response) {
+            $('.cart-count').text(response['count']);
+            $('.cart-price').text('$' + response['total']);
+            $('.select-total h5').text('$' + response['total']);
+
+            var cartHover_tbody = $('.select-items tbody');
+            var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + response['cart'].rowId + "']");
+            if (cartHover_existItem.length) {
+                cartHover_existItem.find('.product-selected p').text('$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty);
+            }
+            else {
+                var newItem =
+                    '<tr data-rowId="' + response['cart'].rowId + '">\n' +
+                    '<td class="si-pic">\n' +
+                    '<img style="height: 70px;"\n' +
+                    'src="front/img/products/' + response['cart'].options.images[0].path + '" alt = "">\n' +
+                    '</td>\n' +
+                    '<td class="si-text">\n' +
+                    '<div class="product-selected">\n' +
+                    '<p>$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty + '</p>\n' +
+                    '<h6>' + response['cart'].name + '</h6>\n' +
+                    '</div>\n' +
+                    '</td>\n' +
+                    '<td class="si-close">\n' +
+                    '<i class="ti-close" onclick="removeCart(\''+ response['cart'].rowId + '\')"></i>\n' +
+                    '</td>\n' +
+                    '</tr>'
+                    ;
+
+                cartHover_tbody.append(newItem);
+            }
+            alert('Add successfull!\nProduct: ' + response['cart'].name);
+            //console.log(response);
+        },
+        error: function (response) {
+            alert('Add failed.');
+            //console.log(response);
+
+        },
+    });
+
+}
+
+function removeCart(rowId) {
+    $.ajax({
+        type: 'GET',
+        url: 'cart/delete',
+        data: { rowId: rowId },
+        success: function (response) {
+
+            // Xu ly trong cart hover
+
+            $('.cart-count').text(response['count']);
+            $('.cart-price').text('$' + response['total']);
+            $('.select-total h5').text('$' + response['total']);
+
+            var cartHover_tbody = $('.select-items tbody');
+            var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + rowId + "']");
+
+            cartHover_existItem.remove();
+
+            //Xu ly trong trang xem chi tiet gio hang
+
+            var cart_tbody = $('.cart-table tbody');
+            var cart_tbody_existItem = cart_tbody.find("tr" + "[data-rowId='" + rowId + "']");
+            cart_tbody_existItem.remove();
+            console.log(response);
+            alert('Delete successfull!');
+            //console.log(response);
+        },
+        error: function (response) {
+            alert('Delete failed.');
+            //console.log(response);
+
+        },
+    });
+}

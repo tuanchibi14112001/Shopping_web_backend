@@ -31,5 +31,6 @@ Route::prefix('shop')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::get('', [CartController::class, 'index']);
-    Route::get('add/{id}', [CartController::class, 'add']);
+    Route::get('add', [CartController::class, 'add']);
+    Route::get('delete', [CartController::class, 'delete']);
 });
