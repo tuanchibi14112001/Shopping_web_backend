@@ -35,70 +35,33 @@
                                 <th><i class="ti-close"></i></th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="cart-pic first-row"><img src="front/img/cart-page/product-1.jpg" alt="">
-                                    </td>
-                                    <td class="cart-title first-row">
-                                        <h5>Pure Pineapple</h5>
-                                    </td>
-                                    <td class="p-price first-row">
-                                        $48.00
-                                    </td>
-                                    <td class="qua-col first-row">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="number" value="1"
-                                                    onkeyup="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
-                                                    onblur="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
-                                                    min="1" required>
+                                @foreach ($carts as $cart)
+                                    <tr>
+                                        <td class="cart-pic first-row"><img style="height: 170px;width: 170px;"
+                                                src="front/img/products/{{ $cart->options->images[0]->path }}"
+                                                alt="">
+                                        </td>
+                                        <td class="cart-title first-row">
+                                            <h5>{{ $cart->name }}</h5>
+                                        </td>
+                                        <td class="p-price first-row">
+                                            ${{ number_format($cart->price, 2) }}
+                                        </td>
+                                        <td class="qua-col first-row">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    <input type="number" value="{{ $cart->qty }}"
+                                                        onkeyup="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
+                                                        onblur="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
+                                                        min="1" required>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price first-row">$48.00</td>
-                                    <td class="close-td"><i class="ti-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-pic"><img src="front/img/cart-page/product-2.jpg" alt=""></td>
-                                    <td class="cart-title">
-                                        <h5>Pure Pineapple</h5>
-                                    </td>
-                                    <td class="p-price">
-                                        $48.00
-                                    </td>
-                                    <td class="qua-col">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="number" value="1"
-                                                    onkeyup="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
-                                                    onblur="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
-                                                    min="1" required>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price">$48.00</td>
-                                    <td class="close-td"><i class="ti-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-pic"><img src="front/img/cart-page/product-3.jpg" alt=""></td>
-                                    <td class="cart-title">
-                                        <h5>Pure Pineapple</h5>
-                                    </td>
-                                    <td class="p-price">
-                                        $48.00
-                                    </td>
-                                    <td class="qua-col">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="number" value="1"
-                                                    onkeyup="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
-                                                    onblur="if(this.value<=0)this.value=1; this.value = Math.round(this.value)"
-                                                    min="1" required>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price">$48.00</td>
-                                    <td class="close-td"><i class="ti-close"></i></td>
-                                </tr>
+                                        </td>
+                                        <td class="total-price first-row">${{ number_format($cart->price * $cart->qty, 2) }}
+                                        </td>
+                                        <td class="close-td"><i class="ti-close"></i></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -119,8 +82,8 @@
                         <div class="col-lg-4 offset-lg-4">
                             <div class="proceed-checkout">
                                 <ul>
-                                    <li class="subtotal">Subtotal <span>$240.00</span></li>
-                                    <li class="cart-total">Total <span>$240.00</span></li>
+                                    <li class="subtotal">Subtotal <span>${{$subtotal}}</span></li>
+                                    <li class="cart-total">Total <span>${{$total}}</span></li>
                                 </ul>
                                 <a href="check-out.html" class="proceed-btn">PROCEED TO CHECKOUT</a>
                             </div>
