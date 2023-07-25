@@ -29,6 +29,9 @@ class ProductService extends BaseService implements ProductServiceInterface
             $avgRating = round($sumRating/$countRating,1);
         }
         $product->avgRating = $avgRating;
+
+        $max_qty = array_sum(array_column($product->productDetails->toArray(), 'qty'));
+        $product->max_qty = $max_qty;
         return $product;
     }
 

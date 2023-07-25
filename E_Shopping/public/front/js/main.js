@@ -255,7 +255,15 @@
                 newVal = 1;
             }
         }
-        $button.parent().find('input').val(newVal);
+        var max_qty = $button.parent().find('input').data('max_qty');
+        if (newVal <= max_qty)
+            $button.parent().find('input').val(newVal);
+        else
+            $button.parent().find('input').val(max_qty);
+
+        //Update cart
+        var rowId = $button.parent().find('input').data('rowid');
+        updateCart(rowId, newVal);
     });
 
     /*-------------------
@@ -293,38 +301,43 @@ function addCart(product_id) {
         url: 'cart/add',
         data: { product_id: product_id },
         success: function (response) {
-            $('.cart-count').text(response['count']);
-            $('.cart-price').text('$' + response['total']);
-            $('.select-total h5').text('$' + response['total']);
-
-            var cartHover_tbody = $('.select-items tbody');
-            var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + response['cart'].rowId + "']");
-            if (cartHover_existItem.length) {
-                cartHover_existItem.find('.product-selected p').text('$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty);
+            if (response['error_add']) {
+                alert(response['error_add']);
             }
             else {
-                var newItem =
-                    '<tr data-rowId="' + response['cart'].rowId + '">\n' +
-                    '<td class="si-pic">\n' +
-                    '<img style="height: 70px;"\n' +
-                    'src="front/img/products/' + response['cart'].options.images[0].path + '" alt = "">\n' +
-                    '</td>\n' +
-                    '<td class="si-text">\n' +
-                    '<div class="product-selected">\n' +
-                    '<p>$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty + '</p>\n' +
-                    '<h6>' + response['cart'].name + '</h6>\n' +
-                    '</div>\n' +
-                    '</td>\n' +
-                    '<td class="si-close">\n' +
-                    '<i class="ti-close" onclick="removeCart(\''+ response['cart'].rowId + '\')"></i>\n' +
-                    '</td>\n' +
-                    '</tr>'
-                    ;
+                $('.cart-count').text(response['count']);
+                $('.cart-price').text('$' + response['total']);
+                $('.select-total h5').text('$' + response['total']);
 
-                cartHover_tbody.append(newItem);
+                var cartHover_tbody = $('.select-items tbody');
+                var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + response['cart'].rowId + "']");
+                if (cartHover_existItem.length) {
+                    cartHover_existItem.find('.product-selected p').text('$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty);
+                }
+                else {
+                    var newItem =
+                        '<tr data-rowId="' + response['cart'].rowId + '">\n' +
+                        '<td class="si-pic">\n' +
+                        '<img style="height: 70px;"\n' +
+                        'src="front/img/products/' + response['cart'].options.images[0].path + '" alt = "">\n' +
+                        '</td>\n' +
+                        '<td class="si-text">\n' +
+                        '<div class="product-selected">\n' +
+                        '<p>$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty + '</p>\n' +
+                        '<h6>' + response['cart'].name + '</h6>\n' +
+                        '</div>\n' +
+                        '</td>\n' +
+                        '<td class="si-close">\n' +
+                        '<i class="ti-close" onclick="removeCart(\'' + response['cart'].rowId + '\')"></i>\n' +
+                        '</td>\n' +
+                        '</tr>'
+                        ;
+
+                    cartHover_tbody.append(newItem);
+                }
+                alert('Add successful!\nProduct: ' + response['cart'].name);
             }
-            alert('Add successfull!\nProduct: ' + response['cart'].name);
-            //console.log(response);
+            console.log(response);
         },
         error: function (response) {
             alert('Add failed.');
@@ -355,12 +368,95 @@ function removeCart(rowId) {
 
             //Xu ly trong trang xem chi tiet gio hang
 
-            var cart_tbody = $('.cart-table tbody');
-            var cart_tbody_existItem = cart_tbody.find("tr" + "[data-rowId='" + rowId + "']");
-            cart_tbody_existItem.remove();
-            console.log(response);
-            alert('Delete successfull!');
+            if (response['count'] === 0) {
+                var empty = '<h4>Your cart is empty.</h4>';
+                $('.shopping-cart .row').children().remove();
+                $('.shopping-cart .row').append(empty);
+            }
+            else {
+                var cart_tbody = $('.cart-table tbody');
+                var cart_tbody_existItem = cart_tbody.find("tr" + "[data-rowId='" + rowId + "']");
+                cart_tbody_existItem.remove();
+                $('.cart-total span').text('$' + response['total']);
+            }
+            alert('Delete successful!');
             //console.log(response);
+        },
+        error: function (response) {
+            alert('Delete failed.');
+            //console.log(response);
+
+        },
+    });
+}
+
+function destroyCart() {
+    $.ajax({
+        type: 'GET',
+        url: 'cart/destroy',
+        data: {},
+        success: function (response) {
+
+            // Xu ly trong cart hover
+
+            $('.cart-count').text('0');
+            $('.cart-price').text('$0');
+            $('.select-total h5').text('$0');
+
+            var cartHover_tbody = $('.select-items tbody');
+            cartHover_tbody.children().remove();
+
+            //Xu ly trong trang xem chi tiet gio hang
+
+            var cart_tbody = $('.cart-table tbody');
+            cart_tbody.children().remove();
+            var empty = '<h4>Your cart is empty.</h4>';
+            $('.shopping-cart .row').children().remove();
+            $('.shopping-cart .row').append(empty);
+            // $('.cart-total span').text('$0');
+
+            // alert('Delete successful!');
+            //console.log(response);
+        },
+        error: function (response) {
+            alert('Delete failed.');
+            //console.log(response);
+
+        },
+    });
+}
+
+function updateCart(rowId, qty) {
+    $.ajax({
+        type: 'GET',
+        url: 'cart/update',
+        data: { rowId: rowId, qty: qty },
+        success: function (response) {
+
+            if (response['error']) {
+                alert(response['error']);
+            }
+            else {
+                // Xu ly trong cart hover
+
+                $('.cart-count').text(response['count']);
+                $('.cart-price').text('$' + response['total']);
+                $('.select-total h5').text('$' + response['total']);
+                var cartHover_tbody = $('.select-items tbody');
+                var cartHover_existItem = cartHover_tbody.find("tr" + "[data-rowId='" + rowId + "']");
+
+                cartHover_existItem.find('.product-selected p').text('$' + response['cart'].price.toFixed(2) + ' x ' + response['cart'].qty);
+                //Xu ly trong trang xem chi tiet gio hang
+
+                var cart_tbody = $('.cart-table tbody');
+                var cart_tbody_existItem = cart_tbody.find("tr" + "[data-rowId='" + rowId + "']");
+                cart_tbody_existItem.find('.total-price').text('$' + (response['cart'].price.toFixed(2) * response['cart'].qty).toFixed(2));
+
+                $('.cart-total span').text('$' + response['total']);
+            }
+            // console.log(response);
+
+            // alert('Update successful!\nProduct: ' + response['cart'].name);
         },
         error: function (response) {
             alert('Delete failed.');
