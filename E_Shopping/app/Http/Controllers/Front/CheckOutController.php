@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Service\Order\OrderServiceInterface;
 use App\Service\OrderDetail\OrderDetailServiceInterface;
+use App\Utilities\VNPay;
 use Illuminate\Http\Request;
 use Cart;
 
@@ -53,14 +54,50 @@ class CheckOutController extends Controller
             $this->orderDetailService->create($data);
         }
 
-        // Xoa gio hang
-        Cart::destroy();
+        if ($request->payment_type == 'pay_later') {
+            // Xoa gio hang
+            Cart::destroy();
+            // Tra ve ket qua
+            return redirect('checkout/result')->with('notification', 'Success! Please check your email.');
+        }
 
-        // Tra ve ket qua
-        return redirect('checkout/result')->with('notification', 'Success! Please check your email.');
+        if ($request->payment_type == 'online_payment') {
+
+            // Lay URL thanh toan VNPay
+            $data_url = VNPay::vnpay_create_payment([
+                'vnp_TxnRef' => $order->id, // ID don hang
+                'vnp_OrderInfo' => 'order', // thong tin mo ta
+                'vnp_Amount' => Cart::total(0, '', '') * 23070 // Tong ia tri don hang VND
+            ]);
+
+            return redirect()->to($data_url);
+        }
     }
 
-    public function result(){
+    public function vnPayCheck(Request $request)
+    {
+        // VNPay tra ve qua $vnp_ReturnUrl
+
+        $vnp_ResponseCode = $request->get('vnp_ResponseCode'); // ma phan hoi
+        $vnp_TxnRef  = $request->get('vnp_TxnRef'); // order id
+        $vnp_Amount  = $request->get('vnp_Amount');
+
+
+        if ($vnp_ResponseCode != null) {
+            if ($vnp_ResponseCode == 00) {
+                Cart::destroy();
+                // Tra ve ket qua
+                return redirect('checkout/result')->with('notification', 'Success! Has paid online.Please check your email.');
+            } else {
+                // xoa order trong csdl
+                $this->orderService->delete($vnp_TxnRef);
+                return redirect('checkout/result')->with('notification', 'Error: Payment failed.');
+            }
+        }
+    }
+
+    public function result()
+    {
         $notifi = session('notification');
         return view('front.checkout.result', [
             'notifi' => $notifi,
