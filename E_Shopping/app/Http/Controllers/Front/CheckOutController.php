@@ -8,6 +8,7 @@ use App\Service\OrderDetail\OrderDetailServiceInterface;
 use App\Utilities\VNPay;
 use Illuminate\Http\Request;
 use Cart;
+use Illuminate\Support\Facades\Mail;
 
 class CheckOutController extends Controller
 {
@@ -55,6 +56,11 @@ class CheckOutController extends Controller
         }
 
         if ($request->payment_type == 'pay_later') {
+
+            $total = Cart::total();
+            $subtotal = 0;
+            $this->sendEmail($order, $total, $subtotal);
+
             // Xoa gio hang
             Cart::destroy();
             // Tra ve ket qua
@@ -85,6 +91,12 @@ class CheckOutController extends Controller
 
         if ($vnp_ResponseCode != null) {
             if ($vnp_ResponseCode == 00) {
+
+                $order = $this->orderService->find($vnp_TxnRef);
+                $total = Cart::total();
+                $subtotal = 0;
+                $this->sendEmail($order, $total, $subtotal);
+
                 Cart::destroy();
                 // Tra ve ket qua
                 return redirect('checkout/result')->with('notification', 'Success! Has paid online.Please check your email.');
@@ -102,5 +114,20 @@ class CheckOutController extends Controller
         return view('front.checkout.result', [
             'notifi' => $notifi,
         ]);
+    }
+
+    private function sendEmail($order, $total, $subtotal)
+    {
+        $email_to = $order->email;
+        
+        Mail::send('front.checkout.email', [
+            'order' => $order,
+            'total' => $total,
+            'subtotal' => $subtotal
+        ], function ($message) use ($email_to) {
+            $message->from('testeshop1411@gmail.com', 'testEshop');
+            $message->to($email_to, $email_to);
+            $message->subject('Order Notification');
+        });
     }
 }
