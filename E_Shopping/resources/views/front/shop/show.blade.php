@@ -270,16 +270,16 @@
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <input type="hidden" name="user_id"
-                                                value="{{ \Illuminate\Support\Facades\Auth::user()->id ?? null }}">
+                                                value="{{ Auth::user()->id ?? null }}">
 
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <input type="text" name="name" id=""
-                                                        placeholder="Name">
+                                                    value="{{ Auth::user()->name ?? null }}" placeholder="Name">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <input type="text" name="email" id=""
-                                                        placeholder="Email">
+                                                    value="{{ Auth::user()->email ?? null }}" placeholder="Email">
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <textarea name="messages" id="" placeholder="Message"></textarea>

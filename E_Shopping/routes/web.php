@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\AccountController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ShopController;
 use App\Http\Controllers\Front\CartController;
@@ -27,7 +28,6 @@ Route::prefix('shop')->group(function () {
     Route::post('product/{id}', [ShopController::class, 'postComment']);
 
     Route::get('category/{category_name}', [ShopController::class, 'category']);
-
 });
 
 Route::prefix('cart')->group(function () {
@@ -42,7 +42,12 @@ Route::prefix('checkout')->group(function () {
     Route::get('', [CheckOutController::class, 'index']);
     Route::post('/', [CheckOutController::class, 'addOrder']);
     Route::get('/result', [CheckOutController::class, 'result']);
-
     Route::get('/vnPayCheck', [CheckOutController::class, 'vnPayCheck']);
+});
+
+Route::prefix('account')->group(function () {
+    Route::get('login', [AccountController::class, 'login']);
+    Route::post('login', [AccountController::class, 'checkLogin']);
+    Route::get('logout', [AccountController::class, 'logout']);
 
 });

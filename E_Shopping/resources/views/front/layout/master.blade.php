@@ -50,7 +50,13 @@
                 </div>
 
                 <div class="ht-right">
-                    <a href="login.html" class="login-panel"><i class="fa fa-user"></i> Login</a>
+                    @if (Auth::check())
+                    <a href="./account/logout" class="login-panel"><i class="fa fa-user"></i> {{Auth::user()->name}} - Logout</a>
+                    @else
+                        <a href="./account/login" class="login-panel"><i class="fa fa-user"></i> Login</a>
+                    @endif
+
+
                     <div class="lan-selector">
                         <select name="countries" id="countries" class="language_drop" style="width:388px;">
                             <option value="yt" data-image="front/img/flag-1.jpg" data-imagecss="flag yt"
@@ -111,7 +117,7 @@
                                         <table>
                                             <tbody>
                                                 @foreach (Cart::content() as $cart)
-                                                    <tr data-rowId="{{$cart->rowId}}">
+                                                    <tr data-rowId="{{ $cart->rowId }}">
                                                         <td class="si-pic"><img style="height: 70px;"
                                                                 src="front/img/products/{{ $cart->options->images[0]->path }}"
                                                                 alt=""></td>
@@ -122,7 +128,8 @@
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <i class="ti-close"  onclick="removeCart('{{$cart->rowId}}')"></i>
+                                                            <i class="ti-close"
+                                                                onclick="removeCart('{{ $cart->rowId }}')"></i>
                                                         </td>
                                                     </tr>
                                                 @endforeach
