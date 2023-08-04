@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Service\Order\OrderServiceInterface;
 use App\Service\OrderDetail\OrderDetailServiceInterface;
+use App\Utilities\Constant;
 use App\Utilities\VNPay;
 use Illuminate\Http\Request;
 use Cart;
@@ -39,12 +40,14 @@ class CheckOutController extends Controller
     {
 
         //Them don hang
-        $order = $this->orderService->create($request->all());
+        $data = $request->all();
+        $data['status'] = Constant::order_status_ReceiveOrder;
+        $order = $this->orderService->create($data);
 
         // Them chi tiet don hang
         $carts = Cart::content();
         foreach ($carts as $cart) {
-            $data = [
+            $cart_data = [
                 'order_id' => $order->id,
                 'product_id' => $cart->id,
                 'qty' => $cart->qty,
@@ -52,7 +55,7 @@ class CheckOutController extends Controller
                 'total' => $cart->qty * $cart->price,
             ];
 
-            $this->orderDetailService->create($data);
+            $this->orderDetailService->create($cart_data);
         }
 
         if ($request->payment_type == 'pay_later') {
@@ -92,6 +95,15 @@ class CheckOutController extends Controller
         if ($vnp_ResponseCode != null) {
             if ($vnp_ResponseCode == 00) {
 
+                // Cap nhat trang thai don hang
+
+                $this->orderService->update(
+                    [
+                        'status' => Constant::order_status_Paid
+                    ],
+                    $vnp_TxnRef
+                );
+
                 $order = $this->orderService->find($vnp_TxnRef);
                 $total = Cart::total();
                 $subtotal = 0;
@@ -119,7 +131,7 @@ class CheckOutController extends Controller
     private function sendEmail($order, $total, $subtotal)
     {
         $email_to = $order->email;
-        
+
         Mail::send('front.checkout.email', [
             'order' => $order,
             'total' => $total,

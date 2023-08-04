@@ -25,6 +25,14 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('level');
             $table->text('description')->nullable();
 
+            $table->string('company_name')->default('ABC')->nullable();
+            $table->string('country')->default('Viet Nam')->nullable();
+            $table->string('street_address')->default('03 Hai Ba Trung')->nullable();
+            $table->string('postcode_zip')->default('10000')->nullable();
+            $table->string('town_city')->default('Ha Noi')->nullable();
+            $table->string('phone')->default('0971528595')->nullable();
+
+
             $table->timestamps();
         });
     }

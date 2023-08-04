@@ -26,6 +26,13 @@ class DatabaseSeeder extends Seeder
                 'avatar' => null,
                 'level' => 2,
                 'description' => null,
+
+                // 'company_name' => "ABC",
+                // 'country' => 'Viet Nam',
+                // 'street_address' => '03 Hai Ba Trung',
+                // 'postcode_zip' => '10000',
+                // 'town_city' => 'Ha Noi',
+                // 'phone' => '0971528594',
             ],
             [
                 'id' => 2,
@@ -381,4 +388,3 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
-

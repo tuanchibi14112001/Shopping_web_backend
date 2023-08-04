@@ -31,43 +31,44 @@
                             </div>
                             <h4>Billing Detail</h4>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <label for="fir">First Name <span>*</span></label>
-                                    <input type="text" name="first_name" id="fir" required>
+                                <input type="hidden" name="user_id"  required value="{{Auth::user()->id ?? ''}}">
+                                <div class="col-lg-12">
+                                    <label for="fir">Name <span>*</span></label>
+                                    <input type="text" name="name" id="fir" required value="{{Auth::user()->name ?? ''}}">
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <label for="last">Last Name <span>*</span></label>
                                     <input type="text" name="last_name" id="last" required>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <label for="com-name">Company Name</label>
-                                    <input type="text" name="company_name" id="com-name">
+                                    <input type="text" name="company_name" id="com-name" value="{{Auth::user()->company_name ?? ''}}">
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="coun">Country <span>*</span></label>
-                                    <input type="text" name="country" id="coun">
+                                    <input type="text" name="country" id="coun" value="{{Auth::user()->country ?? ''}}">
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="street">Street Address <span>*</span></label>
                                     <input type="text" name="street_address" id="street" class="street-first"
-                                        required>
+                                        required value="{{Auth::user()->street_address ?? ''}}">
                                     <!-- <input type="text" name="" id=""> -->
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="zip">Postcode / ZIP (optional) </label>
-                                    <input type="text" name="postcode_zip" id="zip">
+                                    <input type="text" name="postcode_zip" id="zip" value="{{Auth::user()->postcode_zip ?? ''}}">
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="town">Town / City </label>
-                                    <input type="text" name="town_city" id="town">
+                                    <input type="text" name="town_city" id="town" value="{{Auth::user()->town_city ?? ''}}">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="email">Email Address <span>*</span> </label>
-                                    <input type="text" name="email" id="email" required>
+                                    <input type="text" name="email" id="email" required value="{{Auth::user()->email ?? ''}}">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="phone">Phone <span>*</span> </label>
-                                    <input type="text" name="phone" id="phone" required>
+                                    <input type="text" name="phone" id="phone" required value="{{Auth::user()->phone ?? ''}}">
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="create-item">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Service\User\UserServiceInterface;
+use App\Utilities\Constant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class AccountController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-            'level' => 2, // muc do binh thuong
+            'level' => Constant::user_level_client, // muc do binh thuong
         ];
 
         $remember = $request->remember ?? false;
@@ -60,7 +61,7 @@ class AccountController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'level' => 2,
+            'level' => Constant::user_level_client,
         ];
 
         $this->userService->create($data);

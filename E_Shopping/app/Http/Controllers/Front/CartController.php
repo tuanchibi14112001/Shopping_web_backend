@@ -48,7 +48,7 @@ class CartController extends Controller
 
 
             if ($response['cart']->qty > $product->max_qty) {
-                $response['error_add'] = 'Maximum number of products';
+                $response['error_add'] = 'Out of stock';
                 $response['cart']->qty = $product->max_qty;
                 if ($response['cart']->qty <= 0) {
                     $response['cart'] = Cart::remove($response['cart']->rowId);
@@ -96,7 +96,7 @@ class CartController extends Controller
                 $response['count'] = Cart::count();
                 $response['total'] = Cart::total();
             } else {
-                $response['error'] = 'Maximum number of products';
+                $response['error'] = 'Out of stock';
             }
 
             return $response;
