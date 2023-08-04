@@ -49,5 +49,7 @@ Route::prefix('account')->group(function () {
     Route::get('login', [AccountController::class, 'login']);
     Route::post('login', [AccountController::class, 'checkLogin']);
     Route::get('logout', [AccountController::class, 'logout']);
+    Route::get('register', [AccountController::class, 'register']);
+    Route::post('register', [AccountController::class, 'postResgister']);
 
 });

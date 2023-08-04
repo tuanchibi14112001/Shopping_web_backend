@@ -3836,7 +3836,7 @@ ol {
 	margin-bottom: 35px;
 }
 
-.login-form .alert-waring{
+.login-form .alert-waring, .register-form .alert-waring{
 	font-weight: 500;
     background-color: #F0E68C;
     color: #B8860B;
