@@ -11,7 +11,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="index.html"><i class="fa fa-home"></i> Home</a>
-                        <span>Check Out</span>
+                        <span>Result</span>
                     </div>
                 </div>
             </div>

@@ -52,4 +52,8 @@ Route::prefix('account')->group(function () {
     Route::get('register', [AccountController::class, 'register']);
     Route::post('register', [AccountController::class, 'postResgister']);
 
+    Route::prefix('my-order')->group(function () {
+        Route::get('', [AccountController::class, 'myOrderIndex']);
+        Route::get('/{id}', [AccountController::class, 'myOrderDetail']);
+    });
 });
