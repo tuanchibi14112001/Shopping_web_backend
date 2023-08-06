@@ -100,11 +100,11 @@
                                     @endforeach
                                 </div>
                                 <div class="quantity">
-                                    <div class="pro-qty">
+                                    {{-- <div class="pro-qty">
                                         <input type="number" name="" id="" value="1"
                                             min="1">
-                                    </div>
-                                    <a href="#" class="primary-btn pd-cart">Add To Cart</a>
+                                    </div> --}}
+                                    <a href="javascript:addCart({{$product->id}})" class="primary-btn pd-cart">Add To Cart</a>
                                 </div>
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: {{ $product->productCategory->name }}</li>

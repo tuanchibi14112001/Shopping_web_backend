@@ -67,9 +67,9 @@
                                         </select>
                                         <select name="show" onchange="this.form.submit();" id=""
                                             class="p-show">
-                                            <option {{ request('show') == '3' ? 'selected' : '' }} value="3">Show: 3
-                                            </option>
                                             <option {{ request('show') == '9' ? 'selected' : '' }} value="9">Show: 9
+                                            </option>
+                                            <option {{ request('show') == '3' ? 'selected' : '' }} value="3">Show: 3
                                             </option>
                                         </select>
                                     </div>
