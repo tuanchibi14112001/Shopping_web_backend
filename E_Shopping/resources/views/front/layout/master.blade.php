@@ -80,7 +80,7 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="front/img/logo.png" height="25" alt="">
+                                {{-- <img src="front/img/logo.png" height="25" alt=""> --}}
                             </a>
                         </div>
                     </div>
@@ -245,11 +245,11 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-left">
-                        <div class="footer-logo">
+                        {{-- <div class="footer-logo">
                             <a href="index.html">
                                 <img src="front/img/footer-logo.png" height="25" alt="">
                             </a>
-                        </div>
+                        </div> --}}
                         <ul>
                             <li>Dai hoc BKHN</li>
                             <li>Email: tuan@gmail.com</li>

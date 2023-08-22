@@ -208,7 +208,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => 5,
                 'brand_id' => 1,
-                'product_category_id' => 3,
+                'product_category_id' => 1,
                 'name' => "Men's Painted Hat",
                 'description' => null,
                 'content' => null,
@@ -233,7 +233,7 @@ class DatabaseSeeder extends Seeder
                 'weight' => null,
                 'sku' => null,
                 'featured' => true,
-                'tag' => 'Clothing',
+                'tag' => 'Shoes',
             ],
             [
                 'id' => 7,
@@ -244,7 +244,7 @@ class DatabaseSeeder extends Seeder
                 'content' => null,
                 'price' => 64,
                 'qty' => 20,
-                'discount' => 35,
+                'discount' => 60,
                 'weight' => null,
                 'sku' => null,
                 'featured' => true,
@@ -365,6 +365,60 @@ class DatabaseSeeder extends Seeder
                 'color' => 'violet',
                 'size' => 'S',
                 'qty' => 0,
+            ],
+            [
+                'product_id' => 5,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 0,
+            ],
+            [
+                'product_id' => 7,
+                'color' => 'blue',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 8,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 9,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 2,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 3,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 4,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 5,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
+            ],
+            [
+                'product_id' => 6,
+                'color' => 'black',
+                'size' => 'S',
+                'qty' => 2,
             ],
         ]);
 

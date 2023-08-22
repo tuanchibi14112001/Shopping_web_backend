@@ -23,6 +23,7 @@ class ProductRepositories extends BaseRepositories implements ProductRepositorie
 
     public function getFeaturedProducts($categoryId)
     {
+        // San pham trang chu
         return $this->model->where('product_category_id', $categoryId)
             ->orderBy('price', 'desc')->get();
     }
